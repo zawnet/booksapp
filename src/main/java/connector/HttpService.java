@@ -19,11 +19,11 @@ public class HttpService {
     }
 
 
-    private HttpResponse<String> getHttpRequest() {
+    public HttpResponse<String> getHttpRequest() {
 
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(openlibraryAPIConnector.getUrl()))
+                    .uri(openlibraryAPIConnector.getUrl())
                     .GET()
                     .build();
 
@@ -32,8 +32,6 @@ public class HttpService {
 
             return httpResponse;
 
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
         } catch (IOException e) {
 
         } catch (InterruptedException e) {
@@ -41,5 +39,9 @@ public class HttpService {
         }
 
         throw new NoSuchElementException("");
+    }
+
+    public OpenlibraryAPIConnector getOpenlibraryAPIConnector() {
+        return openlibraryAPIConnector;
     }
 }
