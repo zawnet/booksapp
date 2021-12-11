@@ -1,15 +1,13 @@
 package service;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import connector.HttpService;
 import connector.OpenlibraryAPIConnector;
 import model.Doc;
-import org.json.JSONObject;
 
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
@@ -32,21 +30,20 @@ public class DocService {
         httpService.getOpenlibraryAPIConnector().setValue(title);
         HttpResponse<String> httpResponse = httpService.getHttpRequest();
 
-        JSONObject jsonObject = new JSONObject(httpResponse.body());
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.configure(DeserializationFeature.UNWRAP_SINGLE_VALUE_ARRAYS, true);
 
-        jsonObject.getJSONArray("docs").forEach(s -> {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            objectMapper.configure(DeserializationFeature.UNWRAP_SINGLE_VALUE_ARRAYS, true);
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readTree(httpResponse.body());
+            JsonNode docsNode = rootNode.path("docs");
+            docList   = objectMapper.readValue(docsNode.toString(),new TypeReference<List<Doc>>(){});
 
-            try {
-                Doc doc = objectMapper.readValue(s.toString(),Doc.class);
-                docList.add(doc);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        });
-
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        
        docList.forEach(System.out::println);
         return docList;
     }
