@@ -1,11 +1,8 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.io.Serializable;
 import java.util.List;
 
-public class Doc implements Serializable {
+public class Doc {
 
     //@JsonProperty("key")
     private String key;
@@ -37,7 +34,7 @@ public class Doc implements Serializable {
     private String cover_edition_key;
     private int cover_i;
     private List<Object> publisher;
-    private String language;
+    private List<Object> language;
 
     public String getKey() {
         return key;
@@ -183,11 +180,11 @@ public class Doc implements Serializable {
         this.publisher = publisher;
     }
 
-    public String getLanguage() {
+    public List<Object> getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(List<Object> language) {
         this.language = language;
     }
 
