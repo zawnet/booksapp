@@ -20,5 +20,10 @@ public class OpenlibraryAPIConnector {
         this.endpoint = endpoint;
     }
 
+    public String getUrl(){
+        return  baseUrl+endpoint;
+    }
+
+
 
 }
