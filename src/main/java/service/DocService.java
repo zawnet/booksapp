@@ -8,12 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import connector.HttpService;
 import connector.OpenlibraryAPIConnector;
 import model.Doc;
-
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 public class DocService {
 
@@ -43,7 +40,7 @@ public class DocService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        
+
        docList.forEach(System.out::println);
         return docList;
     }
