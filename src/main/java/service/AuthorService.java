@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import connector.HttpService;
 import connector.OpenlibraryAPIConnector;
+import model.Author;
 import model.Book;
 import model.Doc;
 
@@ -53,5 +54,35 @@ public class AuthorService {
         }
         return bookList;
     }
+
+    public Author getAuthorInfo(String key){
+        httpService.getOpenlibraryAPIConnector().setEndpoint("/authors/"+key+".json");
+        Author author = new Author();
+        try {
+            HttpResponse<String> httpResponse = httpService.getHttpRequest();
+
+            if(httpResponse.body().isEmpty()){
+                throw new IllegalArgumentException("Empty response content ");
+            }
+            else {
+                System.out.println(httpResponse);
+            }
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            objectMapper.configure(DeserializationFeature.UNWRAP_SINGLE_VALUE_ARRAYS, true);
+            author = objectMapper.readValue(httpResponse.body(),Author.class);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
+
+        return author;
+    }
+
 
 }

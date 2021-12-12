@@ -1,4 +1,5 @@
 import connector.OpenlibraryAPIConnector;
+import model.Author;
 import model.Book;
 import service.AuthorService;
 import service.BookService;
@@ -15,7 +16,7 @@ public class App {
 
         do {
             System.out.println("What you want do?");
-            System.out.println("1 - Search books by title\t2 - Get book info\t3 - Get books by author\t Q - Quit application\t");
+            System.out.println("1 - Search books by title\t2 - Get book info\t3 - Get books by author\t4 - Show author info\t Q - Quit application\t");
             Scanner input = new Scanner(System.in);
             Scanner inScanner = new Scanner(System.in);
 
@@ -38,6 +39,13 @@ public class App {
                             AuthorService authorService = new AuthorService();
                             System.out.println("Please author key: ");
                             authorService.getAuthorBooks(inScanner.nextLine()).forEach(System.out::println);
+                            break;
+                        case "4":
+                            authorService = new AuthorService();
+                            System.out.println("Please type author key: ");
+                            String authorKey = inScanner.nextLine();
+                            Author author = authorService.getAuthorInfo(authorKey);
+                            System.out.println(author);
                             break;
                         case "q":
                             System.out.println("Goodbye!!!");
