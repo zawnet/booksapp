@@ -1,4 +1,4 @@
-package service;
+package connector;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -9,8 +9,9 @@ import model.Book;
 
 import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
+import java.util.List;
 
-public class BookService {
+public class BookService implements BookConnector{
 
     private HttpService httpService;
 
@@ -51,4 +52,13 @@ public class BookService {
 
     }
 
+    @Override
+    public Book getByISBN(String isbn) {
+        return null;
+    }
+
+    @Override
+    public List<Book> getByTitle(String title) {
+        return null;
+    }
 }

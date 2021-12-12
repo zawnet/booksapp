@@ -22,5 +22,39 @@ public class AuthorEntity {
     private String olKey;
 
     @ManyToMany(mappedBy = "bookAuthors")
-    private Set<BookEntity> books = new HashSet<>();;
+    private Set<BookEntity> books = new HashSet<>();
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPersonalName(String personalName) {
+        this.personalName = personalName;
+    }
+
+    public void setEnType(String enType) {
+        this.enType = enType;
+    }
+
+    public void setWikipedia(String wikipedia) {
+        this.wikipedia = wikipedia;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setOlKey(String olKey) {
+        this.olKey = olKey;
+    }
+
+    public void setBooks(Set<BookEntity> books) {
+        this.books = books;
+    }
+
+
 }

@@ -5,11 +5,11 @@ import entity.AuthorEntity;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-public class AuthorsManagerRepository extends CrudManagerRepository<AuthorEntity> implements RepositoryForAuthors{
+public class AuthorManagerRepository extends CrudManagerRepository<AuthorEntity> implements AuthorRepository {
 
     private final EntityManager entityManager;
 
-    public AuthorsManagerRepository(EntityManager entityManager) {
+    public AuthorManagerRepository(EntityManager entityManager) {
         super(entityManager, AuthorEntity.class);
         this.entityManager = entityManager;
     }

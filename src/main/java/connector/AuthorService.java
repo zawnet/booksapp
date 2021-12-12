@@ -1,4 +1,4 @@
-package service;
+package connector;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -15,7 +15,8 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuthorService {
+public class AuthorService implements  AuthorConnector{
+
     private HttpService httpService;
 
     public AuthorService() {
