@@ -1,5 +1,6 @@
 import connector.OpenlibraryAPIConnector;
 import model.Book;
+import service.AuthorService;
 import service.BookService;
 import service.DocService;
 
@@ -32,6 +33,14 @@ public class App {
                             String bookKey = inScanner.nextLine();
                             Book book = bookService.getBookByKey(bookKey);
                             System.out.println(book);
+                            break;
+                        case "3":
+                            AuthorService authorService = new AuthorService();
+                            System.out.println("Please author key: ");
+                            authorService.getAuthorBooks(inScanner.nextLine()).forEach(System.out::println);
+                            break;
+                        case "q":
+                            System.out.println("Goodbye!!!");
                             break;
                         default:
                             throw new NoSuchMethodException("Unexpected operation code.");

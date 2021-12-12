@@ -11,7 +11,8 @@ public class Book {
     private String title;
     private List<Object> isbn_13;
     private List<Object> isbn_10;
-    //private String publish_date;
+    private String publish_date;
+    private List<Author> authors;
     private String key;
     private int revision;
 
@@ -64,6 +65,22 @@ public class Book {
         this.isbn_10 = isbn_10;
     }
 
+    public String getPublish_date() {
+        return publish_date;
+    }
+
+    public void setPublish_date(String publish_date) {
+        this.publish_date = publish_date;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
+
     public String getKey() {
         return key;
     }
@@ -89,6 +106,8 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", isbn_13=" + isbn_13 +
                 ", isbn_10=" + isbn_10 +
+                ", publish_date='" + publish_date + '\'' +
+                ", authors=" + authors +
                 ", key='" + key + '\'' +
                 ", revision=" + revision +
                 ']';
