@@ -19,6 +19,28 @@ public class HttpService {
     }
 
 
+    public HttpResponse<String> getHttpRequest(String param, String value) {
+
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(openlibraryAPIConnector.getUrl(param, value))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> httpResponse = HttpClient.newHttpClient()
+                    .send(request, HttpResponse.BodyHandlers.ofString());
+
+            return httpResponse;
+
+        } catch (IOException e) {
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        throw new NoSuchElementException("");
+    }
+
     public HttpResponse<String> getHttpRequest() {
 
         try {

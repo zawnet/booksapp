@@ -9,9 +9,6 @@ public class OpenlibraryAPIConnector {
 
     private String host = "https://openlibrary.org";
     private String endpoint = "/search.json";
-    private String param;
-    private String value;
-
 
 
     public String getEndpoint() {
@@ -30,26 +27,19 @@ public class OpenlibraryAPIConnector {
         this.host = host;
     }
 
-    public String getParam() {
-        return param;
-    }
 
-    public void setParam(String param) {
-        this.param = param;
-    }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public URI getUrl(){
+    public URI getUrl(String param, String value){
 
         URI uri = URIBuilder.fromString(host+endpoint)
                 .addParameter(param,value)
+                .toURI();
+
+        return uri;
+    }
+    public URI getUrl(){
+
+        URI uri = URIBuilder.fromString(host+endpoint)
                 .toURI();
 
         return uri;
