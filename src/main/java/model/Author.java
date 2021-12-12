@@ -5,12 +5,10 @@ import java.util.List;
 public class Author {
     private String name;
     private String title;
-
     private String personal_name;
    // private String bio;
     private String entity_type;
     private String wikipedia;
-
     private String birth_date;
     private String key;
 

@@ -49,7 +49,7 @@ public class DocService {
         catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
-       //docList.forEach(System.out::println);
+
         return docList;
     }
 

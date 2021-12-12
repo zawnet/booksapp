@@ -1,14 +1,24 @@
-import connector.OpenlibraryAPIConnector;
+package application;
+
 import model.Author;
 import model.Book;
 import service.AuthorService;
 import service.BookService;
 import service.DocService;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class App {
+    private static EntityManagerFactory entityManagerFactory
+            = Persistence.createEntityManagerFactory(
+            "booksPU");
+
+    private static EntityManager entityManager
+            = entityManagerFactory.createEntityManager();
 
     public static void main(String[] args){
 
