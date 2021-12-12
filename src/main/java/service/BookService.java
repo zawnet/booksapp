@@ -7,6 +7,7 @@ import connector.HttpService;
 import connector.OpenlibraryAPIConnector;
 import model.Book;
 
+import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 
 public class BookService {
@@ -22,22 +23,28 @@ public class BookService {
 
         Book book = new Book();
         httpService.getOpenlibraryAPIConnector().setEndpoint("/books/"+key+".json");
-        HttpResponse<String> httpResponse = httpService.getHttpRequest();
-        if(httpResponse.body().isEmpty()){
-            throw new IllegalArgumentException("Empty response body content ");
-        }
-        else {
-            System.out.println(httpResponse);
-        }
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.configure(DeserializationFeature.UNWRAP_SINGLE_VALUE_ARRAYS, true);
-
         try {
+            HttpResponse<String> httpResponse = httpService.getHttpRequest();
+
+
+            if(httpResponse.body().isEmpty()){
+                throw new IllegalArgumentException("Empty response content ");
+            }
+            else {
+                System.out.println(httpResponse);
+            }
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            objectMapper.configure(DeserializationFeature.UNWRAP_SINGLE_VALUE_ARRAYS, true);
             book = objectMapper.readValue(httpResponse.body(),Book.class);
+
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+        }
+
+        catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
         }
 
         return book;

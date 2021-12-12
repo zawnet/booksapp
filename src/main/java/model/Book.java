@@ -4,19 +4,33 @@ import java.util.List;
 
 public class Book {
 
-    //private List<Object> publishers;
+    private List<Object> publishers;
+    private int number_of_pages;
     private String physical_format;
     //private List<Object> last_modified;
     private String title;
-    //private List<Object> isbn_13;
-    private String isbn_10;
+    private List<Object> isbn_13;
+    private List<Object> isbn_10;
     //private String publish_date;
     private String key;
     private int revision;
 
 
+    public List<Object> getPublishers() {
+        return publishers;
+    }
 
+    public void setPublishers(List<Object> publishers) {
+        this.publishers = publishers;
+    }
 
+    public int getNumber_of_pages() {
+        return number_of_pages;
+    }
+
+    public void setNumber_of_pages(int number_of_pages) {
+        this.number_of_pages = number_of_pages;
+    }
 
     public String getPhysical_format() {
         return physical_format;
@@ -26,22 +40,6 @@ public class Book {
         this.physical_format = physical_format;
     }
 
-//    public List<Object> getPublishers() {
-//        return publishers;
-//    }
-//
-//    public void setPublishers(List<Object> publishers) {
-//        this.publishers = publishers;
-//    }
-//
-//    public List<Object> getLast_modified() {
-//        return last_modified;
-//    }
-//
-//    public void setLast_modified(List<Object> last_modified) {
-//        this.last_modified = last_modified;
-//    }
-
     public String getTitle() {
         return title;
     }
@@ -50,29 +48,21 @@ public class Book {
         this.title = title;
     }
 
-//    public List<Object> getIsbn_13() {
-//        return isbn_13;
-//    }
-//
-//    public void setIsbn_13(List<Object> isbn_13) {
-//        this.isbn_13 = isbn_13;
-//    }
+    public List<Object> getIsbn_13() {
+        return isbn_13;
+    }
 
-    public String getIsbn_10() {
+    public void setIsbn_13(List<Object> isbn_13) {
+        this.isbn_13 = isbn_13;
+    }
+
+    public List<Object> getIsbn_10() {
         return isbn_10;
     }
 
-    public void setIsbn_10(String isbn_10) {
+    public void setIsbn_10(List<Object> isbn_10) {
         this.isbn_10 = isbn_10;
     }
-
-//    public String getPublish_date() {
-//        return publish_date;
-//    }
-//
-//    public void setPublish_date(String publish_date) {
-//        this.publish_date = publish_date;
-//    }
 
     public String getKey() {
         return key;
@@ -93,13 +83,12 @@ public class Book {
     @Override
     public String toString() {
         return "Book[" +
-            //    "publishers=" + publishers +
+                "publishers=" + publishers +
+                ", number_of_pages=" + number_of_pages +
                 ", physical_format='" + physical_format + '\'' +
-              //  ", last_modified=" + last_modified +
                 ", title='" + title + '\'' +
-               // ", isbn_13=" + isbn_13 +
-                ", isbn_10='" + isbn_10 + '\'' +
-               // ", publish_date='" + publish_date + '\'' +
+                ", isbn_13=" + isbn_13 +
+                ", isbn_10=" + isbn_10 +
                 ", key='" + key + '\'' +
                 ", revision=" + revision +
                 ']';
