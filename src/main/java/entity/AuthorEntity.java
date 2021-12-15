@@ -57,4 +57,39 @@ public class AuthorEntity {
     }
 
 
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPersonalName() {
+        return personalName;
+    }
+
+    public String getEnType() {
+        return enType;
+    }
+
+    public String getWikipedia() {
+        return wikipedia;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public String getOlKey() {
+        return olKey;
+    }
+
+    public Set<BookEntity> getBooks() {
+        return books;
+    }
 }

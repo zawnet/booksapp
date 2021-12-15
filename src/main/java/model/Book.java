@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Book {
@@ -50,6 +51,9 @@ public class Book {
     }
 
     public List<Object> getIsbn_13() {
+        if (isbn_13 == null){
+            isbn_13 = new ArrayList<>();
+        }
         return isbn_13;
     }
 
@@ -58,6 +62,9 @@ public class Book {
     }
 
     public List<Object> getIsbn_10() {
+        if(isbn_10 == null){
+            isbn_10 = new ArrayList<>();
+        }
         return isbn_10;
     }
 
@@ -79,6 +86,13 @@ public class Book {
 
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
+    }
+
+    public void addAuthor(Author author){
+        if(this.authors == null || this.authors.isEmpty()){
+            this.authors = new ArrayList<>();
+        }
+        this.authors.add(author);
     }
 
     public String getKey() {

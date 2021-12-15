@@ -3,8 +3,6 @@ package connector;
 import connector.OpenlibraryAPIConnector;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -49,7 +47,9 @@ public class HttpService {
                     .GET()
                     .build();
 
-            HttpResponse<String> httpResponse = HttpClient.newHttpClient()
+            HttpResponse<String> httpResponse = HttpClient.newBuilder()
+                    .followRedirects(HttpClient.Redirect.NORMAL) // follow redirects
+                    .build()
                     .send(request, HttpResponse.BodyHandlers.ofString());
 
             return httpResponse;

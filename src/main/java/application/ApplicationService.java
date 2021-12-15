@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface ApplicationService {
 
-    Book getByISBN(String isbn);
-    List<Book> getByName(String name);
-    List<Book> getBooksByAuthor(String authorName);
-    Author getAuthorInfo(long id);
+    public Book getByISBN(String isbn);
+    public List<Book> getByName(String name);
+    public List<Book> getBooksByAuthor(String authorName);
+    public Author getAuthorInfo(long id);
 
 }

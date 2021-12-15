@@ -24,8 +24,8 @@ public class BookManagerRepository extends CrudManagerRepository<BookEntity> imp
 
     @Override
     public List<BookEntity> findByTitle(String title) {
-        Query query= entityManager.createQuery("from BookEntity where title=:title ");
-        query.setParameter("title", title);
+        Query query= entityManager.createQuery("from BookEntity where title like :title ");
+        query.setParameter("title", "%"+title+"%");
         return  query.getResultList();
     }
 }

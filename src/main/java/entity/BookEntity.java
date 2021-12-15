@@ -19,7 +19,7 @@ public class BookEntity {
     private String publish_date;
     private String ol_key;
 
-    @ManyToMany()
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(
             name = "books_authors",
             joinColumns = { @JoinColumn(name = "book_id") },
@@ -75,4 +75,7 @@ public class BookEntity {
         bookAuthors.add(authorEntity);
     }
 
+    public Set<AuthorEntity> getBookAuthors() {
+        return bookAuthors;
+    }
 }

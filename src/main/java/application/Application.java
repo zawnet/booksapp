@@ -2,6 +2,8 @@ package application;
 
 import connector.BookConnector;
 import connector.BookService;
+import entity.BookEntity;
+import mapper.BookToBookEntityMapper;
 import model.Author;
 import model.Book;
 import repository.BookManagerRepository;
@@ -9,6 +11,7 @@ import repository.BookManagerRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Application implements ApplicationService{
@@ -30,12 +33,25 @@ public class Application implements ApplicationService{
 
     @Override
     public Book getByISBN(String isbn) {
-        return null;
+        return bookService.getByISBN(isbn);
     }
 
     @Override
     public List<Book> getByName(String name) {
-        return null;
+
+        List<BookEntity> bookEntities = bookManagerRepository.findByTitle(name);
+
+        if(bookEntities == null || bookEntities.isEmpty()){
+            bookService.getByTitle(name).forEach(book -> bookManagerRepository.create(BookToBookEntityMapper.convert(book)));
+            bookEntities = bookManagerRepository.findByTitle(name);
+        }
+       List<Book> bookList = new ArrayList<>();
+        bookEntities.forEach(bookEntity -> {
+            bookList.add(BookToBookEntityMapper.convert(bookEntity));
+        });
+
+        return  bookList;
+
     }
 
     @Override
