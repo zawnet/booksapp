@@ -5,11 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import connector.HttpService;
-import connector.OpenlibraryAPIConnector;
 import model.Author;
 import model.Book;
-import model.Doc;
 
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
@@ -84,6 +81,5 @@ public class AuthorService implements  AuthorConnector{
 
         return author;
     }
-
 
 }
