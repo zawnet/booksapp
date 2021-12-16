@@ -1,6 +1,5 @@
 package application;
 
-import connector.BookConnector;
 import connector.BookService;
 import entity.BookEntity;
 import mapper.BookToBookEntityMapper;
@@ -36,20 +35,22 @@ public class Application implements ApplicationService{
     public Book getByISBN(String isbn) {
         BookEntity bookEntity = bookManagerRepository.findByISBN(isbn);
         Book book = new Book();
-        if(bookEntity == null)
+        if(bookEntity == null) {
             try {
                 book = bookService.getByISBN(isbn);
                 bookManagerRepository.create(BookToBookEntityMapper.convert(book));
                 bookEntity = bookManagerRepository.findByISBN(isbn);
                 book = BookToBookEntityMapper.convert(bookEntity);
                 return book;
-            }
-            catch (NoSuchElementException ex) {
+            } catch (NoSuchElementException ex) {
                 System.out.println(ex.getMessage());
             }
-        return null;
+        }
+        else {
+            book = BookToBookEntityMapper.convert(bookEntity);
+        }
+            return book;
     }
-
 
     @Override
     public List<Book> getByName(String name) {
@@ -66,7 +67,6 @@ public class Application implements ApplicationService{
         });
 
         return  bookList;
-
     }
 
     @Override
