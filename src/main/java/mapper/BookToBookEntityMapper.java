@@ -59,10 +59,26 @@ public class BookToBookEntityMapper {
 
         book.setPublish_date(bookEntity.getPublish_date());
         book.setKey(bookEntity.getOl_key());
-        List<Author> authors = new ArrayList<>();
-        bookEntity.getBookAuthors().forEach(authorEntity -> authors.add(AuthorToAuthorEntityMapper.convert(authorEntity)));
+        try {
 
-        if(!authors.isEmpty()) book.setAuthors(authors);
+            if (bookEntity.getBookAuthors() == null || bookEntity.getBookAuthors().isEmpty()) {
+                throw new NoSuchElementException("No authors for " + book.getTitle());
+            }
+            for (AuthorEntity authorEntity : bookEntity.getBookAuthors()) {
+                Author author = new Author();
+                author.setName(authorEntity.getName());
+                author.setBirth_date(authorEntity.getBirthDate());
+                author.setEntity_type(authorEntity.getEnType());
+                author.setKey(authorEntity.getOlKey());
+                author.setPersonal_name(authorEntity.getPersonalName());
+                author.setWikipedia(authorEntity.getWikipedia());
+                author.setTitle(authorEntity.getTitle());
+                book.addAuthor(author);
+            }
+        }catch (NoSuchElementException e){
+            System.out.println(e.getMessage());
+        }
+
         return book;
     }
 }

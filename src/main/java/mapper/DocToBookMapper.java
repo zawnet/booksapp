@@ -26,8 +26,6 @@ public class DocToBookMapper {
         }
         List<Object> authorsKeys = new ArrayList<>();
         try {
-
-
             authorsKeys = doc.getSeed().stream().filter(o -> o.toString().contains("/authors/"))
                     .collect(Collectors.toList());
             if (authorsKeys == null || authorsKeys.isEmpty()) {
@@ -48,6 +46,7 @@ public class DocToBookMapper {
         //book.setPublish_date(doc.getPublish_date().toString());
         book.setNumber_of_pages(doc.getNumber_of_pages_median());
         book.setPublishers(doc.getPublisher());
+        //book.setPublish_date(String.valueOf(doc.getPu);
         book.setTitle(doc.getTitle());
         return book;
     }

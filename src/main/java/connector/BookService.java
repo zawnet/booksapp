@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static mapper.DocToBookMapper.convert;
 import static org.apache.commons.lang3.StringUtils.*;
@@ -51,6 +52,11 @@ public class BookService implements BookConnector{
         catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
+
+        if (book == null){
+            throw new NoSuchElementException("Book not found in API");
+        }
+
         return book;
     }
 
@@ -62,7 +68,6 @@ public class BookService implements BookConnector{
 
         try {
             HttpResponse<String> httpResponse = httpService.getHttpRequest();
-
 
             if(isBlank(httpResponse.body())){
                 throw new IllegalArgumentException("Empty response content ");

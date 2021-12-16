@@ -13,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Application implements ApplicationService{
 
@@ -33,8 +34,22 @@ public class Application implements ApplicationService{
 
     @Override
     public Book getByISBN(String isbn) {
-        return bookService.getByISBN(isbn);
+        BookEntity bookEntity = bookManagerRepository.findByISBN(isbn);
+        Book book = new Book();
+        if(bookEntity == null)
+            try {
+                book = bookService.getByISBN(isbn);
+                bookManagerRepository.create(BookToBookEntityMapper.convert(book));
+                bookEntity = bookManagerRepository.findByISBN(isbn);
+                book = BookToBookEntityMapper.convert(bookEntity);
+                return book;
+            }
+            catch (NoSuchElementException ex) {
+                System.out.println(ex.getMessage());
+            }
+        return null;
     }
+
 
     @Override
     public List<Book> getByName(String name) {
