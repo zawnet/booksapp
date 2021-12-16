@@ -1,21 +1,19 @@
 package connector;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import connector.HttpService;
-import connector.OpenlibraryAPIConnector;
+
 import model.Book;
 import model.Doc;
+import org.apache.commons.lang3.StringUtils;
 
-import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import  static mapper.DocToBookMapper.convert;
+import static mapper.DocToBookMapper.convert;
+import static org.apache.commons.lang3.StringUtils.*;
 
 public class BookService implements BookConnector{
 
@@ -34,7 +32,7 @@ public class BookService implements BookConnector{
             HttpResponse<String> httpResponse = httpService.getHttpRequest();
 
 
-            if(httpResponse.body().isEmpty()){
+            if(isBlank(httpResponse.body())){
                 throw new IllegalArgumentException("Empty response content ");
             }
             else {
@@ -66,7 +64,7 @@ public class BookService implements BookConnector{
             HttpResponse<String> httpResponse = httpService.getHttpRequest();
 
 
-            if(httpResponse.body().isEmpty()){
+            if(isBlank(httpResponse.body())){
                 throw new IllegalArgumentException("Empty response content ");
             }
             else {

@@ -4,11 +4,14 @@ import entity.AuthorEntity;
 import entity.BookEntity;
 import model.Author;
 import model.Book;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class BookToBookEntityMapper {
 
@@ -47,8 +50,13 @@ public class BookToBookEntityMapper {
     public static Book convert(BookEntity bookEntity){
         Book book = new Book();
         book.setTitle(bookEntity.getTitle());
-        if(bookEntity.getIsbn_10() != null) book.setIsbn_10(List.of(bookEntity.getIsbn_10()));
-        if(bookEntity.getIsbn_13() != null) book.setIsbn_13(List.of(bookEntity.getIsbn_13()));
+        if(!isBlank(bookEntity.getIsbn_10())){
+            book.setIsbn_10(List.of(bookEntity.getIsbn_10()));
+        }
+        if(!isBlank(bookEntity.getIsbn_13())){
+            book.setIsbn_13(List.of(bookEntity.getIsbn_13()));
+        }
+
         book.setPublish_date(bookEntity.getPublish_date());
         book.setKey(bookEntity.getOl_key());
         List<Author> authors = new ArrayList<>();

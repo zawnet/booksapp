@@ -1,6 +1,4 @@
-import application.App;
-import application.Application;
-import application.ApplicationService;
+package application;
 
 public class StartupApp {
     public static void main(String[] args) {

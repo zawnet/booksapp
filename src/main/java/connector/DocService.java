@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysql.cj.util.StringUtils;
 import connector.HttpService;
 import connector.OpenlibraryAPIConnector;
 import model.Doc;
@@ -28,7 +29,7 @@ public class DocService {
         try {
 
 
-        if(httpResponse.body().isEmpty()){
+        if( httpResponse.body().isBlank()){
             throw new IllegalArgumentException("Empty response body content ");
         }
 
