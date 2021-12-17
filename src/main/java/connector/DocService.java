@@ -23,9 +23,8 @@ public class DocService {
 
     public List<Doc> getDocsByTitle(String title){
         List<Doc> docList = new ArrayList<>();
-        httpService.getOpenlibraryAPIConnector().setEndpoint("/search.json");
 
-        HttpResponse<String> httpResponse = httpService.getHttpRequest("title", title);
+        HttpResponse<String> httpResponse = httpService.getHttpRequest(OpenlibraryAPIConnector.getSearchBookEndpoint(title));
         try {
 
 

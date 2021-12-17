@@ -2,13 +2,7 @@ package application;
 
 import model.Author;
 import model.Book;
-import connector.AuthorService;
-import connector.BookService;
-import connector.DocService;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.Locale;
 import java.util.Scanner;
 

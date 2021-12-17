@@ -40,8 +40,9 @@ public class Application implements ApplicationService{
                 book = bookService.getByISBN(isbn);
                 bookManagerRepository.create(BookToBookEntityMapper.convert(book));
                 bookEntity = bookManagerRepository.findByISBN(isbn);
-                book = BookToBookEntityMapper.convert(bookEntity);
-                return book;
+                if(bookEntity != null) {
+                    book = BookToBookEntityMapper.convert(bookEntity);
+                }
             } catch (NoSuchElementException ex) {
                 System.out.println(ex.getMessage());
             }

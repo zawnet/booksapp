@@ -3,6 +3,7 @@ package connector;
 import connector.OpenlibraryAPIConnector;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -17,16 +18,19 @@ public class HttpService {
     }
 
 
-    public HttpResponse<String> getHttpRequest(String param, String value) {
+    public HttpResponse<String> getHttpRequest(URI uri) {
 
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(openlibraryAPIConnector.getUrl(param, value))
+                    .uri(uri)
                     .GET()
                     .build();
 
-            HttpResponse<String> httpResponse = HttpClient.newHttpClient()
+            HttpResponse<String> httpResponse = HttpClient.newBuilder()
+                    .followRedirects(HttpClient.Redirect.NORMAL) // follow redirects
+                    .build()
                     .send(request, HttpResponse.BodyHandlers.ofString());
+
 
             return httpResponse;
 
@@ -39,32 +43,6 @@ public class HttpService {
         throw new NoSuchElementException("");
     }
 
-    public HttpResponse<String> getHttpRequest() {
-
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(openlibraryAPIConnector.getUrl())
-                    .GET()
-                    .build();
-
-            HttpResponse<String> httpResponse = HttpClient.newBuilder()
-                    .followRedirects(HttpClient.Redirect.NORMAL) // follow redirects
-                    .build()
-                    .send(request, HttpResponse.BodyHandlers.ofString());
-
-            return httpResponse;
-
-        }
-
-        catch (IOException e) {
-            e.getMessage();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-        throw new NoSuchElementException("");
-    }
 
     public OpenlibraryAPIConnector getOpenlibraryAPIConnector() {
         return openlibraryAPIConnector;

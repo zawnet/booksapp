@@ -24,9 +24,9 @@ public class AuthorService implements  AuthorConnector{
 
         List<Book> bookList = new ArrayList<>();
 
-        httpService.getOpenlibraryAPIConnector().setEndpoint("/authors/"+key+"/works.json");
+        //httpService.getOpenlibraryAPIConnector().setEndpoint("/authors/"+key+"/works.json");
 
-        HttpResponse<String> httpResponse = httpService.getHttpRequest();
+        HttpResponse<String> httpResponse = httpService.getHttpRequest(OpenlibraryAPIConnector.getGetAuthorEndpoint(key));
         try {
 
             if(httpResponse.body().isEmpty()){
@@ -54,10 +54,10 @@ public class AuthorService implements  AuthorConnector{
     }
 
     public Author getAuthorInfo(String key){
-        httpService.getOpenlibraryAPIConnector().setEndpoint("/authors/"+key+".json");
+        //httpService.getOpenlibraryAPIConnector().setEndpoint("/authors/"+key+".json");
         Author author = new Author();
         try {
-            HttpResponse<String> httpResponse = httpService.getHttpRequest();
+            HttpResponse<String> httpResponse = httpService.getHttpRequest(OpenlibraryAPIConnector.getGetAuthorEndpoint(key));
 
             if(httpResponse.body().isEmpty()){
                 throw new IllegalArgumentException("Empty response content ");

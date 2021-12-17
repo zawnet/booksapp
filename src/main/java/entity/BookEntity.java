@@ -13,6 +13,7 @@ public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column( length = 100000 )
     private String title;
     private String isbn_13;
     private String isbn_10;
