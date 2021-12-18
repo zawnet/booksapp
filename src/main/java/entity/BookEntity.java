@@ -3,6 +3,7 @@ package entity;
 import model.Author;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,13 +21,13 @@ public class BookEntity {
     private String publish_date;
     private String ol_key;
 
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(
-            name = "books_authors",
-            joinColumns = { @JoinColumn(name = "book_id") },
-            inverseJoinColumns = { @JoinColumn(name = "author_id") }
-    )
-    private Set<AuthorEntity> bookAuthors = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    private Set<AuthorEntity> authors = new HashSet<AuthorEntity>(0);
+
 
     public void setTitle(String title) {
         this.title = title;
@@ -68,15 +69,16 @@ public class BookEntity {
         this.ol_key = ol_key;
     }
 
-    public void setBookAuthors(Set<AuthorEntity> bookAuthors) {
-        this.bookAuthors = bookAuthors;
+    public Set<AuthorEntity> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Set<AuthorEntity> authors) {
+        this.authors = authors;
     }
 
     public void addAuthor(AuthorEntity authorEntity){
-        bookAuthors.add(authorEntity);
+        authors.add(authorEntity);
     }
 
-    public Set<AuthorEntity> getBookAuthors() {
-        return bookAuthors;
-    }
 }

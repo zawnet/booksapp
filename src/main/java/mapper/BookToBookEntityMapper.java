@@ -25,7 +25,6 @@ public class BookToBookEntityMapper {
 
         try {
 
-
             if (book.getAuthors() == null || book.getAuthors().isEmpty()) {
                 throw new NoSuchElementException("No authors for " + book.getTitle());
             }
@@ -65,10 +64,10 @@ public class BookToBookEntityMapper {
         book.setKey(bookEntity.getOl_key());
         try {
 
-            if (bookEntity.getBookAuthors() == null || bookEntity.getBookAuthors().isEmpty()) {
+            if (bookEntity.getAuthors() == null || bookEntity.getAuthors().isEmpty()) {
                 throw new NoSuchElementException("No authors for " + book.getTitle());
             }
-            for (AuthorEntity authorEntity : bookEntity.getBookAuthors()) {
+            for (AuthorEntity authorEntity : bookEntity.getAuthors()) {
                 Author author = new Author();
                 author.setName(authorEntity.getName());
                 author.setBirth_date(authorEntity.getBirthDate());

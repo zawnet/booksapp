@@ -89,37 +89,41 @@ public class Application implements ApplicationService{
         }
         catch (NoAuthorFoundException e){
             System.out.println(e.getMessage());
+        }
+
+
+        if(StringUtils.isBlank(authorEntity.getOlKey())){
             Author author = authorService.getAuthorInfo(authorKey);
-            if(!StringUtils.isBlank(author.getKey())){
-                authorEntity = authorManagerRepository.create(AuthorToAuthorEntityMapper.convert(author));
-            }
+            authorEntity = authorManagerRepository.create(AuthorToAuthorEntityMapper.convert(author));
         }
             bookEntities = bookManagerRepository.findBooksByAuthorKey(authorKey);
-            authorEntity = authorManagerRepository.findAuthorByKey(authorKey);
 
-            if (bookEntities.isEmpty() ) {
-                bookList = authorService.getAuthorBooks(authorKey);
-                if(!bookList.isEmpty()) {
-                    for (Book book : bookList) {
-                        BookEntity bookEntity;
-                        try {
-                            bookEntity = bookManagerRepository.findBookByOlKey(book.getKey());
-                        }
-                        catch (NoBookFoundException e){
-                            e.getMessage();
-                            bookEntity = BookToBookEntityMapper.convert(book);
-                            bookEntity.addAuthor(authorEntity);
-                            bookManagerRepository.create(bookEntity);
-                        }
-
+        if (bookEntities.isEmpty() ) {
+            bookList = authorService.getAuthorBooks(authorKey);
+            if(!bookList.isEmpty()) {
+                for (Book book : bookList) {
+                    BookEntity bookEntity = new BookEntity();
+                    try {
+                        bookEntity = bookManagerRepository.findBookByOlKey(book.getKey());
+                    }
+                    catch (NoBookFoundException e){
+                        e.getMessage();
+                    }
+                    if (StringUtils.isBlank(bookEntity.getOl_key())) {
+                        bookEntity = BookToBookEntityMapper.convert(book);
+                        bookEntity.addAuthor(authorEntity);
+                        bookManagerRepository.create(bookEntity);
                     }
 
                 }
-                Set<BookEntity> bookSet = authorEntity.getBooks();
-                bookList = new ArrayList<>();
-                for (BookEntity bookEntity : bookEntities) {
-                    bookList.add(BookToBookEntityMapper.convert(bookEntity));
-                }
+
+            }
+
+            bookEntities = bookManagerRepository.findBooksByAuthorKey(authorKey);
+            bookList = new ArrayList<>();
+            for (BookEntity bookEntity : bookEntities) {
+                bookList.add(BookToBookEntityMapper.convert(bookEntity));
+            }
             }
         return  bookList;
     }

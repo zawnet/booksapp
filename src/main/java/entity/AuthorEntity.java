@@ -2,6 +2,7 @@ package entity;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,8 +22,10 @@ public class AuthorEntity {
     private String birthDate;
     private String olKey;
 
-    @ManyToMany(mappedBy = "bookAuthors")
-    private Set<BookEntity> books = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authors", fetch = FetchType.EAGER)
+    private Set<BookEntity> books = new HashSet<BookEntity>();
+
 
     public void setName(String name) {
         this.name = name;
@@ -50,10 +53,6 @@ public class AuthorEntity {
 
     public void setOlKey(String olKey) {
         this.olKey = olKey;
-    }
-
-    public void setBooks(Set<BookEntity> books) {
-        this.books = books;
     }
 
 
@@ -91,5 +90,9 @@ public class AuthorEntity {
 
     public Set<BookEntity> getBooks() {
         return books;
+    }
+
+    public void setBooks(Set<BookEntity> books) {
+        this.books = books;
     }
 }

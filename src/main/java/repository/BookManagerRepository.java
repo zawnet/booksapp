@@ -1,13 +1,9 @@
 package repository;
 
-import entity.AuthorEntity;
 import entity.BookEntity;
-import model.Book;
-import repository.exeption.NoAuthorFoundException;
 import repository.exeption.NoBookFoundException;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.*;
 
@@ -37,11 +33,10 @@ public class BookManagerRepository extends CrudManagerRepository<BookEntity> imp
 
     @Override
     public List<BookEntity> findBooksByAuthorKey(String key) {
-        AuthorRepository authorRepository = new AuthorManagerRepository(entityManager);
-        AuthorEntity authorEntity = authorRepository.findAuthorByKey(key);
-
-        return new ArrayList<>(authorEntity.getBooks());
-
+        Query query = entityManager.createQuery(
+                "SELECT b FROM BookEntity b JOIN b.authors a WHERE a.olKey like :key");
+        query.setParameter("key", "%"+key+"%");
+        return query.getResultList();
     }
 
     @Override
