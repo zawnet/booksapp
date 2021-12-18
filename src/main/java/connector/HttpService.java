@@ -1,6 +1,7 @@
 package connector;
 
 import connector.OpenlibraryAPIConnector;
+import connector.exception.HttpServiceException;
 
 import java.io.IOException;
 import java.net.URI;
@@ -32,9 +33,12 @@ public class HttpService {
 
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (NoSuchElementException e){
+            e.getMessage();
         }
 
-        throw new NoSuchElementException("bura");
+        throw new HttpServiceException("Error while callService method");
+
     }
 
 }

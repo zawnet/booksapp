@@ -5,12 +5,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import connector.exception.HttpServiceException;
 import model.Author;
 import model.Book;
 
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class AuthorService implements  AuthorConnector{
 
@@ -24,8 +26,8 @@ public class AuthorService implements  AuthorConnector{
 
         List<Book> bookList = new ArrayList<>();
 
-        HttpResponse<String> httpResponse = httpService.callService(OpenlibraryAPIConnector.getGetAuthorBooksEndpoint(key));
         try {
+            HttpResponse<String> httpResponse = httpService.callService(OpenlibraryAPIConnector.getGetAuthorBooksEndpoint(key));
 
             if(httpResponse.body().isEmpty()){
                 throw new IllegalArgumentException("Empty response body content ");
@@ -46,6 +48,13 @@ public class AuthorService implements  AuthorConnector{
             System.out.println(e.getMessage());;
         }
         catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
+
+        catch (HttpServiceException e){
+            System.out.println(e.getMessage());
+        }
+        catch (NoSuchElementException e){
             System.out.println(e.getMessage());
         }
         return bookList;
@@ -71,8 +80,10 @@ public class AuthorService implements  AuthorConnector{
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
         catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
+        catch (NoSuchElementException e){
             System.out.println(e.getMessage());
         }
 

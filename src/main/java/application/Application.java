@@ -118,13 +118,13 @@ public class Application implements ApplicationService{
                 }
 
             }
-
             bookEntities = bookManagerRepository.findBooksByAuthorKey(authorKey);
-            bookList = new ArrayList<>();
-            for (BookEntity bookEntity : bookEntities) {
-                bookList.add(BookToBookEntityMapper.convert(bookEntity));
-            }
-            }
+        }
+
+        bookList = new ArrayList<>();
+        for (BookEntity bookEntity : bookEntities) {
+            bookList.add(BookToBookEntityMapper.convert(bookEntity));
+        }
         return  bookList;
     }
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import connector.exception.HttpServiceException;
 import model.Book;
 import model.Doc;
 import org.apache.commons.lang3.StringUtils;
@@ -32,7 +33,6 @@ public class BookService implements BookConnector{
         try {
             HttpResponse<String> httpResponse = httpService.callService(OpenlibraryAPIConnector.getBookByKeyEndpoint(key));
 
-
             if(isBlank(httpResponse.body())){
                 throw new IllegalArgumentException("Empty response content ");
             }
@@ -50,6 +50,9 @@ public class BookService implements BookConnector{
         }
 
         catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
+        catch (HttpServiceException e){
             System.out.println(e.getMessage());
         }
 
