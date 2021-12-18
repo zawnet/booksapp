@@ -28,6 +28,7 @@ public class AuthorManagerRepository extends CrudManagerRepository<AuthorEntity>
         Query query = entityManager.createQuery("FROM AuthorEntity WHERE olKey like :key");
         query.setParameter("key", "%"+key+"%");
         if(!query.getResultList().isEmpty()) {
+
             return (AuthorEntity) query.getResultList().get(0);
         }
         else {

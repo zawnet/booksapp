@@ -39,6 +39,7 @@ public class BookManagerRepository extends CrudManagerRepository<BookEntity> imp
     public List<BookEntity> findBooksByAuthorKey(String key) {
         AuthorRepository authorRepository = new AuthorManagerRepository(entityManager);
         AuthorEntity authorEntity = authorRepository.findAuthorByKey(key);
+
         return new ArrayList<>(authorEntity.getBooks());
 
     }

@@ -17,10 +17,7 @@ import repository.exeption.NoBookFoundException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class Application implements ApplicationService{
 
@@ -116,9 +113,9 @@ public class Application implements ApplicationService{
                         }
 
                     }
-                    bookEntities = bookManagerRepository.findBooksByAuthorKey(authorKey);
-                }
 
+                }
+                Set<BookEntity> bookSet = authorEntity.getBooks();
                 bookList = new ArrayList<>();
                 for (BookEntity bookEntity : bookEntities) {
                     bookList.add(BookToBookEntityMapper.convert(bookEntity));

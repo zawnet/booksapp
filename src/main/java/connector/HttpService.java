@@ -28,12 +28,13 @@ public class HttpService {
             return httpResponse;
 
         } catch (IOException e) {
+            e.printStackTrace();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        throw new NoSuchElementException("");
+        throw new NoSuchElementException("bura");
     }
 
 }
