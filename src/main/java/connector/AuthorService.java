@@ -17,16 +17,14 @@ public class AuthorService implements  AuthorConnector{
     private HttpService httpService;
 
     public AuthorService() {
-        this.httpService = new HttpService(new OpenlibraryAPIConnector());
+        this.httpService = new HttpService();
     }
 
     public List<Book> getAuthorBooks(String key){
 
         List<Book> bookList = new ArrayList<>();
 
-        //httpService.getOpenlibraryAPIConnector().setEndpoint("/authors/"+key+"/works.json");
-
-        HttpResponse<String> httpResponse = httpService.getHttpRequest(OpenlibraryAPIConnector.getGetAuthorEndpoint(key));
+        HttpResponse<String> httpResponse = httpService.callService(OpenlibraryAPIConnector.getGetAuthorBooksEndpoint(key));
         try {
 
             if(httpResponse.body().isEmpty()){
@@ -54,10 +52,9 @@ public class AuthorService implements  AuthorConnector{
     }
 
     public Author getAuthorInfo(String key){
-        //httpService.getOpenlibraryAPIConnector().setEndpoint("/authors/"+key+".json");
         Author author = new Author();
         try {
-            HttpResponse<String> httpResponse = httpService.getHttpRequest(OpenlibraryAPIConnector.getGetAuthorEndpoint(key));
+            HttpResponse<String> httpResponse = httpService.callService(OpenlibraryAPIConnector.getGetAuthorEndpoint(key));
 
             if(httpResponse.body().isEmpty()){
                 throw new IllegalArgumentException("Empty response content ");

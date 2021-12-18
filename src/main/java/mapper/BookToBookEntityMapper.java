@@ -29,6 +29,9 @@ public class BookToBookEntityMapper {
             if (book.getAuthors() == null || book.getAuthors().isEmpty()) {
                 throw new NoSuchElementException("No authors for " + book.getTitle());
             }
+            if(book.getAuthors().stream()
+                    .filter(author -> author.getKey() != null)
+                    .count()>0){
             for (Author author : book.getAuthors()) {
                 AuthorEntity authorEntity = new AuthorEntity();
                 authorEntity.setName(author.getName());
@@ -39,6 +42,7 @@ public class BookToBookEntityMapper {
                 authorEntity.setWikipedia(author.getWikipedia());
                 authorEntity.setTitle(author.getTitle());
                 bookEntity.addAuthor(authorEntity);
+            }
             }
         }catch (NoSuchElementException e){
             System.out.println(e.getMessage());

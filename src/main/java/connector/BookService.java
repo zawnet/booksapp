@@ -22,7 +22,7 @@ public class BookService implements BookConnector{
 
 
     public BookService() {
-        this.httpService = new HttpService(new OpenlibraryAPIConnector());
+        this.httpService = new HttpService();
     }
 
     public Book getBookByKey(String key){
@@ -30,7 +30,7 @@ public class BookService implements BookConnector{
         Book book = new Book();
 
         try {
-            HttpResponse<String> httpResponse = httpService.getHttpRequest(OpenlibraryAPIConnector.getBookByKeyEndpoint(key));
+            HttpResponse<String> httpResponse = httpService.callService(OpenlibraryAPIConnector.getBookByKeyEndpoint(key));
 
 
             if(isBlank(httpResponse.body())){
@@ -64,10 +64,8 @@ public class BookService implements BookConnector{
     public Book getByISBN(String isbn) {
         Book book = new Book();
 
-        //httpService.getOpenlibraryAPIConnector().setEndpoint("/isbn/"+isbn+".json");
-
         try {
-            HttpResponse<String> httpResponse = httpService.getHttpRequest(OpenlibraryAPIConnector.getGetBookByIsbnEndpoint(isbn));
+            HttpResponse<String> httpResponse = httpService.callService(OpenlibraryAPIConnector.getGetBookByIsbnEndpoint(isbn));
 
             if(isBlank(httpResponse.body())){
                 throw new IllegalArgumentException("Empty response content ");

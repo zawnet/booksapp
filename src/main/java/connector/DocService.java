@@ -18,13 +18,13 @@ public class DocService {
     private HttpService httpService;
 
     public DocService() {
-        this.httpService = new HttpService(new OpenlibraryAPIConnector());
+        this.httpService = new HttpService();
     }
 
     public List<Doc> getDocsByTitle(String title){
         List<Doc> docList = new ArrayList<>();
 
-        HttpResponse<String> httpResponse = httpService.getHttpRequest(OpenlibraryAPIConnector.getSearchBookEndpoint(title));
+        HttpResponse<String> httpResponse = httpService.callService(OpenlibraryAPIConnector.getSearchBookEndpoint(title));
         try {
 
 

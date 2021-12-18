@@ -11,6 +11,7 @@ public class OpenlibraryAPIConnector {
     private static final String GET_AUTHOR_ENDPOINT         = "https://openlibrary.org/authors/";
     private static final String GET_BOOK_BY_ISBN_ENDPOINT   = "https://openlibrary.org/isbn/";
     private static final String GET_BOOK_BY_KEY_ENDPOINT    = "https://openlibrary.org/books/";
+    private static final String GET_AUTHOR_BOOKS_ENDPOINT   = "https://openlibrary.org/authors/";
 
     public static URI getGetAuthorEndpoint(String authorKey) {
         return getUrl(GET_AUTHOR_ENDPOINT+authorKey+".json");
@@ -28,20 +29,22 @@ public class OpenlibraryAPIConnector {
         return getUrl(GET_BOOK_BY_KEY_ENDPOINT+key+".json");
     }
 
+    public static URI getGetAuthorBooksEndpoint(String key) { return getUrl(GET_AUTHOR_BOOKS_ENDPOINT+key+"/works.json"); }
+
 
     private static URI getUrl(String path, String param, String value){
 
         URI uri = URIBuilder.fromString(path)
                 .addParameter(param,value)
                 .toURI();
-
         return uri;
     }
     private static URI getUrl(String path){
 
         URI uri = URIBuilder.fromString(path)
                 .toURI();
-
         return uri;
     }
+
+
 }

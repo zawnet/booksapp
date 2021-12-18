@@ -1,16 +1,24 @@
 package application;
 
+import connector.AuthorService;
 import connector.BookService;
+import entity.AuthorEntity;
 import entity.BookEntity;
+import mapper.AuthorToAuthorEntityMapper;
 import mapper.BookToBookEntityMapper;
 import model.Author;
 import model.Book;
+import org.apache.commons.lang3.StringUtils;
+import repository.AuthorManagerRepository;
 import repository.BookManagerRepository;
+import repository.exeption.NoAuthorFoundException;
+import repository.exeption.NoBookFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -24,11 +32,15 @@ public class Application implements ApplicationService{
             = entityManagerFactory.createEntityManager();
 
     private final BookService bookService;
+    private final AuthorService authorService;
     private final BookManagerRepository bookManagerRepository;
+    private final AuthorManagerRepository authorManagerRepository;
 
     public Application() {
         this.bookService = new BookService();
+        this.authorService = new AuthorService();
         this.bookManagerRepository = new BookManagerRepository(entityManager);
+        this.authorManagerRepository = new AuthorManagerRepository(entityManager);
     }
 
     @Override
@@ -63,16 +75,56 @@ public class Application implements ApplicationService{
             bookEntities = bookManagerRepository.findByTitle(name);
         }
        List<Book> bookList = new ArrayList<>();
-        bookEntities.forEach(bookEntity -> {
+        for (BookEntity bookEntity : bookEntities) {
             bookList.add(BookToBookEntityMapper.convert(bookEntity));
-        });
+        }
 
         return  bookList;
     }
 
     @Override
-    public List<Book> getBooksByAuthor(String authorName) {
-        return null;
+    public List<Book> getBooksByAuthor(String authorKey) {
+        List<BookEntity> bookEntities = new ArrayList<>();
+        List<Book> bookList = new ArrayList<>();
+        AuthorEntity authorEntity = new AuthorEntity();
+        try {
+            authorEntity = authorManagerRepository.findAuthorByKey(authorKey);
+        }
+        catch (NoAuthorFoundException e){
+            System.out.println(e.getMessage());
+            Author author = authorService.getAuthorInfo(authorKey);
+            if(!StringUtils.isBlank(author.getKey())){
+                authorEntity = authorManagerRepository.create(AuthorToAuthorEntityMapper.convert(author));
+            }
+        }
+            bookEntities = bookManagerRepository.findBooksByAuthorKey(authorKey);
+            authorEntity = authorManagerRepository.findAuthorByKey(authorKey);
+
+            if (bookEntities.isEmpty() ) {
+                bookList = authorService.getAuthorBooks(authorKey);
+                if(!bookList.isEmpty()) {
+                    for (Book book : bookList) {
+                        BookEntity bookEntity;
+                        try {
+                            bookEntity = bookManagerRepository.findBookByOlKey(book.getKey());
+                        }
+                        catch (NoBookFoundException e){
+                            e.getMessage();
+                            bookEntity = BookToBookEntityMapper.convert(book);
+                            bookEntity.addAuthor(authorEntity);
+                            bookManagerRepository.create(bookEntity);
+                        }
+
+                    }
+                    bookEntities = bookManagerRepository.findBooksByAuthorKey(authorKey);
+                }
+
+                bookList = new ArrayList<>();
+                for (BookEntity bookEntity : bookEntities) {
+                    bookList.add(BookToBookEntityMapper.convert(bookEntity));
+                }
+            }
+        return  bookList;
     }
 
     @Override

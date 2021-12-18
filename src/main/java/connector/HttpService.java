@@ -11,14 +11,8 @@ import java.util.NoSuchElementException;
 
 public class HttpService {
 
-    private OpenlibraryAPIConnector openlibraryAPIConnector;
 
-    public HttpService(OpenlibraryAPIConnector openlibraryAPIConnector) {
-        this.openlibraryAPIConnector = openlibraryAPIConnector;
-    }
-
-
-    public HttpResponse<String> getHttpRequest(URI uri) {
+    public HttpResponse<String> callService(URI uri) {
 
         try {
             HttpRequest request = HttpRequest.newBuilder()
@@ -31,7 +25,6 @@ public class HttpService {
                     .build()
                     .send(request, HttpResponse.BodyHandlers.ofString());
 
-
             return httpResponse;
 
         } catch (IOException e) {
@@ -43,8 +36,4 @@ public class HttpService {
         throw new NoSuchElementException("");
     }
 
-
-    public OpenlibraryAPIConnector getOpenlibraryAPIConnector() {
-        return openlibraryAPIConnector;
-    }
 }
