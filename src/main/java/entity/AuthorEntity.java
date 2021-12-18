@@ -21,12 +21,7 @@ public class AuthorEntity {
     private String birthDate;
     private String olKey;
 
-    @ManyToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "books_authors",
-            joinColumns = { @JoinColumn(name = "book_id") },
-            inverseJoinColumns = { @JoinColumn(name = "author_id") }
-    )
+    @ManyToMany(mappedBy = "bookAuthors")
     private Set<BookEntity> books = new HashSet<>();
 
     public void setName(String name) {
